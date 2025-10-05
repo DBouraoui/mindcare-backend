@@ -1,0 +1,74 @@
+services:
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: always
+        depends_on:
+            - boilerplate-database
+        ports:
+            - "8000:8080"
+            - "443:443"
+            - "443:443/udp"
+        environment:
+            SERVER_NAME: ":8080"  #Deactivate for prod for activate for https
+            CADDY_GLOBAL_OPTIONS: "auto_https off" #Deactivate for prod for activate for https
+        volumes:
+            - .:/app
+            - caddy_data:/data
+            - caddy_config:/config
+        networks:
+            - database_nw
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    boilerplate-database:
+        image: postgres:latest
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: ${PG_PASSWORD:-root}
+            POSTGRES_USER: ${PG_USER:-root}
+            POSTGRES_DB: ${PG_DB:-app}
+        volumes:
+            - boilerplate_data:/var/lib/postgresql/data
+        networks:
+            - database_nw
+            - adminer_nw
+            - grafana_nw
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -U ${PG_USER:-root}" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - "8080:8080"
+        networks:
+            - adminer_nw
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+volumes:
+    boilerplate_data:
+    caddy_data:
+    caddy_config:
+
+
+networks:
+    database_nw:
+        driver: bridge
+    adminer_nw:
+        driver: bridge
+    grafana_nw:
+        driver: bridge
