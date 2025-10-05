@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\DTO\ProfessionelRegisterDto;
+use App\Entity\Pro;
 use App\Entity\User;
 use App\Entity\UserToken;
 use App\Enum\TokenType;
@@ -59,6 +61,21 @@ readonly class AuthService
         );
 
 
+
+        return $user;
+    }
+
+    public function createPro(DtoInterface $dto, User $user): User {
+        $pro =  (new Pro())
+            ->setPrice($dto->price)
+            ->setCountry($dto->country)
+            ->setDescription($dto->description)
+            ->setDiplome($dto->diplome)
+            ->setUtilisateur($user)
+            ->setCreatedAt(new \DateTimeImmutable());
+
+        $this->entityManager->persist($pro);
+        $this->entityManager->flush();
 
         return $user;
     }

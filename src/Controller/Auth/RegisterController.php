@@ -2,10 +2,14 @@
 
 namespace App\Controller\Auth;
 
+use App\DTO\ProfessionelRegisterDto;
 use App\DTO\UserRegisterDto;
+use App\Entity\Pro;
+use App\Entity\User;
 use App\Event\RateLimiterEvent;
 use App\Service\AuthService;
 use App\Service\UtilitaireService;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,4 +71,47 @@ final class RegisterController extends AbstractController
             );
         }
     }
+
+    /**
+     * User PRO registration endpoint.
+     *
+     * Accepts user data, applies IP-based rate limit, validates input,
+     * and creates the user pro account.
+     */
+    #[Route('/api/register-pro', name: 'app_register_pro', methods: ['POST'])]
+    public function registerProfessionel(Request $request): JsonResponse {
+        try {
+            $requestData = json_decode($request->getContent());
+
+            // Decode and validate the registration data
+            $requestData = json_decode($request->getContent());
+            $registerDto = $this->utilService->mapAndValidateRequestDto(
+                $requestData,
+                new UserRegisterDto()
+            );
+
+            // Create user and generate token
+            $user =  $this->authService->createUser($registerDto);
+
+            // Validate Profesionel data
+            $proDto = $this->utilService->mapAndValidateRequestDto(
+                $requestData,
+                new ProfessionelRegisterDto()
+            );
+
+            // Create professionel
+            $this->authService->createPro($proDto, $user);
+
+            // LOG creation of pro
+            $this->logger->log(1,sprintf("%s register in pro", $user->getEmail()));
+
+            return $this->json('success', Response::HTTP_CREATED);
+        } catch (\Throwable $e) {
+            return $this->json(
+                ['error' => $e->getMessage()],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
 }

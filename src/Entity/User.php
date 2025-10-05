@@ -57,10 +57,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isActive = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $phone = null;
+
+    #[ORM\OneToOne(mappedBy: 'utilisateur', cascade: ['persist', 'remove'])]
+    private ?Pro $pro = null;
+
+    /**
+     * @var Collection<int, Notification>
+     */
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'utilisateur')]
+    private Collection $notifications;
+
 
     public function __construct()
     {
         $this->session = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     #[ORM\PreUpdate]
@@ -250,6 +272,106 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): static
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getPro(): ?Pro
+    {
+        return $this->pro;
+    }
+
+    public function setPro(?Pro $pro): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($pro === null && $this->pro !== null) {
+            $this->pro->setUtilisateur(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($pro !== null && $pro->getUtilisateur() !== $this) {
+            $pro->setUtilisateur($this);
+        }
+
+        $this->pro = $pro;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): static
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUtilisateur() === $this) {
+                $notification->setUtilisateur(null);
+            }
+        }
 
         return $this;
     }

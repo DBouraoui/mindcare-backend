@@ -1,18 +1,18 @@
 meta {
-  name: Register
+  name: Login
   type: http
-  seq: 1
+  seq: 4
 }
 
 post {
-  url: http://localhost:8000/api/register
+  url: http://localhost:8000/api/login_check
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "email": "{{email}}",
+    "email":"{{email}}",
     "password": "{{password}}"
   }
 }

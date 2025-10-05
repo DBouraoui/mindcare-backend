@@ -1,0 +1,30 @@
+meta {
+  name: Register PRO
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8000/api/register-pro
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "{{email}}",
+    "password": "{{password}}",
+    "firstname": "{{firstname}}",
+    "lastname": "{{lastname}}",
+    "phone": "{{phone}}",
+    "city": "{{city}}",
+    "price": "{{price}}",
+    "description":"{{description}}",
+    "diplome": "{{diplome}}",
+    "country": "{{country}}"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

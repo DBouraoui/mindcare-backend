@@ -1,16 +1,10 @@
 <?php
 
 namespace App\DTO;
-
-use App\Interface\DtoInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Data Transfer Object for user registration.
- *
- * This DTO captures the email and password submitted during the sign-up process.
- */
-class UserRegisterDto implements DtoInterface
+
+class ProfessionelRegisterDto implements \App\Interface\DtoInterface
 {
     /**
      * The user's email address.
@@ -46,5 +40,9 @@ class UserRegisterDto implements DtoInterface
     public string $lastname;
     public string $city;
     public string $phone;
+    public string $price;
+    public string $description;
+    public string $country;
+    public string $diplome;
 
 }
