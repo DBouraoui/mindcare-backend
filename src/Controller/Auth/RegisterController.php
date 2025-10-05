@@ -4,12 +4,9 @@ namespace App\Controller\Auth;
 
 use App\DTO\ProfessionelRegisterDto;
 use App\DTO\UserRegisterDto;
-use App\Entity\Pro;
-use App\Entity\User;
 use App\Event\RateLimiterEvent;
 use App\Service\AuthService;
 use App\Service\UtilitaireService;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -28,7 +28,7 @@ class Notification
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $read_at = null;
 
     public function getId(): ?int
