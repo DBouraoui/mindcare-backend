@@ -13,7 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
-class UpdatePassword extends AbstractController
+class UpdateUserPassword extends AbstractController
 {
     public function __construct(
         private readonly UtilitaireService $utilitaireService,

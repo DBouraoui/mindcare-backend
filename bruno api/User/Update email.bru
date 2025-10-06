@@ -1,0 +1,25 @@
+meta {
+  name: Update email
+  type: http
+  seq: 3
+}
+
+patch {
+  url: http://localhost:8000/api/user-email
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NTk3NjgzNzMsImV4cCI6MTc1OTc3MTk3Mywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZHlsYW4uYm91cmFvdWlAZXBpdGVjaC5ldSJ9.jOtUFsSTn5ZW4wM_FO0fBOgP8lKmyU_otjfD4Z9Lbz8KQHXS6xu84RLF-0pMRhYd7yWNyWMIcnUg1HpzSJH5VxFEwmakauUHs_qZF8hYSw42GdkBrA_OCKQCA1QxQiC0B28_H45Sld-LxnH9SOyBqqrpzkdB3TtEh7rem8tCWlRrxjcaRtdt0ghFKSMWE_CySvuDXGrZ4ZuL7hQ-6xfa9INaUBFcY3GzaRjlEnN4fX37mRBxnU5QnBWIRt0ZpoWmQ1BP0Gpoe9MemidrdZFWao7o8QuUrzoFE11tf8S9uE_f7ATjlAdaBPql4q_g0vELVCofo0RSSNrSx4hV8FNMOA
+}
+
+body:json {
+  {
+    "email": "{{newEmail}}"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

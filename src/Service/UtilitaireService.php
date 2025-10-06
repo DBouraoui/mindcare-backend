@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class UtilitaireService
+readonly class UtilitaireService
 {
 
     public function __construct(

@@ -9,7 +9,7 @@ use App\Interface\DtoInterface;
 use App\Repository\NotificationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class NotificationService
+readonly  class NotificationService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,

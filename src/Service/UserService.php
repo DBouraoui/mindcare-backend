@@ -44,4 +44,15 @@ readonly class UserService
 
         return $user;
     }
+
+    public function updateEmail(DtoInterface $dto, User $user): User
+    {
+        if ($user->getEmail() !== $dto->email) {
+            $user->setEmail($dto->email);
+        }
+
+        $this->entityManager->flush();
+
+        return $user;
+    }
 }
