@@ -2,20 +2,20 @@
 
 namespace App\EventSubscriber;
 
-use App\DTO\CreateNotificationDto;
+use App\DTO\Notification\CreateNotificationDto;
 use App\Event\NotificationCreateEvent;
 use App\Service\NotificationService;
-use Doctrine\Common\EventSubscriber;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class NotificationSubscriber implements EventSubscriber
+readonly class NotificationSubscriber implements EventSubscriberInterface
 {
 
     public function __construct(
-        private readonly NotificationService $notificationService
+        private NotificationService $notificationService
     ) {
     }
 
-    public function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             NotificationCreateEvent::class => 'onCreateNotification',
@@ -29,6 +29,7 @@ class NotificationSubscriber implements EventSubscriber
         $notification->user = $event->user;
         $notification->description = $event->description;
         $notification->type = $event->type;
+        $notification->createdAt = new \DateTimeImmutable();
 
         $this->notificationService->createNotification($notification);
 

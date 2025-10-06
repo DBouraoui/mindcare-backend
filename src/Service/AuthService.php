@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\DTO\ProfessionelRegisterDto;
 use App\Entity\Pro;
 use App\Entity\User;
 use App\Entity\UserToken;
@@ -237,4 +236,37 @@ readonly class AuthService
 
         return $user;
     }
+
+    public function updateInformation(DtoInterface $dto, User $user): User {
+
+        if ($user->getCity() !== $dto->city) {
+            $user->setCity($dto->city);
+        }
+
+        if ($user->getPhone() !== $dto->phone) {
+            $user->setPhone($dto->phone);
+        }
+
+        if ($user->getFirstname() !== $dto->firstname) {
+            $user->setFirstname($dto->firstname);
+        }
+
+        if ($user->getLastname() !== $dto->lastname) {
+            $user->setLastname($dto->lastname);
+        }
+
+        $this->entityManager->flush();
+
+        return $user;
+    }
+
+    public function updateUserPassword(DtoInterface $dto, User $user): User
+    {
+        $user->setPassword($this->userPasswordHasher->hashPassword($user, $dto->password));
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $user;
+    }
+
 }

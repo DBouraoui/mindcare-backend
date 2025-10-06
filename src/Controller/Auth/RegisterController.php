@@ -2,8 +2,10 @@
 
 namespace App\Controller\Auth;
 
-use App\DTO\ProfessionelRegisterDto;
-use App\DTO\UserRegisterDto;
+use App\DTO\auth\ProfessionelRegisterDto;
+use App\DTO\auth\UserRegisterDto;
+use App\Enum\NotificationType;
+use App\Event\NotificationCreateEvent;
 use App\Event\RateLimiterEvent;
 use App\Service\AuthService;
 use App\Service\UtilitaireService;
@@ -59,6 +61,13 @@ final class RegisterController extends AbstractController
 
             $this->logger->log(1,sprintf("%s register", $user->getEmail()));
 
+            $this->dispatcher->dispatch(new NotificationCreateEvent(
+                "Bienvenu sur mindcare !",
+                "votre compte est bien activée",
+                NotificationType::SIMPLE->value,
+                $user
+            ));
+
             return $this->json('success', Response::HTTP_CREATED);
 
         } catch (\Throwable $e) {
@@ -101,6 +110,13 @@ final class RegisterController extends AbstractController
 
             // LOG creation of pro
             $this->logger->log(1,sprintf("%s register in pro", $user->getEmail()));
+
+            $this->dispatcher->dispatch(new NotificationCreateEvent(
+                "Bienvenu sur mindcare !",
+                "votre compte professionel est bien activée",
+                NotificationType::SIMPLE->value,
+                $user
+            ));
 
             return $this->json('success', Response::HTTP_CREATED);
         } catch (\Throwable $e) {

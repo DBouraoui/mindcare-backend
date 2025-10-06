@@ -69,13 +69,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $phone = null;
 
-    #[ORM\OneToOne(mappedBy: 'utilisateur', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'utilisateur', cascade: ['remove'])]
     private ?Pro $pro = null;
 
     /**
      * @var Collection<int, Notification>
      */
-    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'utilisateur')]
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'utilisateur', cascade: ['remove'])]
     private Collection $notifications;
 
 

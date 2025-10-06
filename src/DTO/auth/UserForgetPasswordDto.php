@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\auth;
 
 use App\Interface\DtoInterface;
 use Symfony\Component\Validator\Constraints\Email;

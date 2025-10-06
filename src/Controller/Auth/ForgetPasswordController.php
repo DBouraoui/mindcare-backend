@@ -2,7 +2,7 @@
 
 namespace App\Controller\Auth;
 
-use App\DTO\UserForgetPasswordDto;
+use App\DTO\auth\UserForgetPasswordDto;
 use App\Service\AuthService;
 use App\Service\UtilitaireService;
 use Psr\Log\LoggerInterface;

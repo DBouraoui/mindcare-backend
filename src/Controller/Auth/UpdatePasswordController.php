@@ -2,7 +2,7 @@
 
 namespace App\Controller\Auth;
 
-use App\DTO\UpdatePasswordDto;
+use App\DTO\auth\UpdatePasswordDto;
 use App\Service\AuthService;
 use App\Service\UtilitaireService;
 use Psr\Log\LoggerInterface;

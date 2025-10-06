@@ -7,10 +7,11 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class NotificationCreateEvent extends Event
 {
-    public string $type;
-    public string $description;
     public string $title;
+    public string $description;
+    public string $type;
     public User $user;
+
     public function __construct(
         string $title,
         string $description,

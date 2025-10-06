@@ -2,17 +2,12 @@
 
 namespace App\Controller\Auth;
 
-use App\Enum\NotificationType;
-use App\Event\NotificationCreateEvent;
 use App\Service\AuthService;
-use PHPUnit\Event\Dispatcher;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
@@ -24,7 +19,6 @@ final class ConfirmEmailController extends AbstractController
 {
     public function __construct(
         private AuthService $authService, private readonly LoggerInterface $logger,
-        private readonly EventDispatcherInterface $dispatcher
     ) {}
 
     #[Route(path: '/api/confirm-email', name: 'confirm-email', methods: ['GET'])]
@@ -39,13 +33,6 @@ final class ConfirmEmailController extends AbstractController
             }
 
            $user = $this->authService->confirmEmail($token, $email);
-
-            $this->dispatcher->dispatch(new NotificationCreateEvent(
-                "Bienvenu !",
-                    "votre compte est bien activée",
-                NotificationType::SIMPLE->value,
-                $user
-            ));
 
             $this->logger->log(1,sprintf("%s confirm her email",$user->getEmail()));
 
