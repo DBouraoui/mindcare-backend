@@ -1,0 +1,25 @@
+meta {
+  name: Read notification
+  type: http
+  seq: 1
+}
+
+put {
+  url: http://localhost:8000/api/notification
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NTk2ODcwNjEsImV4cCI6MTc1OTY5MDY2MSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZHlsYW4uYm91cmFvdWlAZXBpdGVjaC5ldSJ9.DNoWfZ0CUBILNJbF3MtEKhN6e_0Jn66752Fbp5hShxaKWSAdgJFXTr36fLvaMu7E7olCbmJkuaIcrsixRrXR0PDNEylvl3YeywFj5MsfjlxqtfPDN6geOV9eF0fyydtM2V4oQags8tJuG1jG-ThemLveMtG1raNicSd3rs12MndVxqQKZvrwaAbvNTaRhMA1Z_16CYjWWvzgmI0pfoe2_KtneZWRKJjXKRNwcUuj1wBlUps8MpP6xAfR-XY3S4NjjrAgeEvjr3rbQuhbO1C_1YAR2aSvcmcTV63QNbBKuezu9E26wVTlChhuSWsHjYhwoOkfnqXsm0dZ9KxtQbDhUg
+}
+
+body:json {
+  {
+    "id": "4"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
