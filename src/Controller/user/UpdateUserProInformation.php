@@ -17,9 +17,9 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 class UpdateUserProInformation extends AbstractController
 {
     public function __construct(
-        public readonly UtilitaireService $utilitaireService,
-        public readonly UserService $userService,
-        public readonly EventDispatcherInterface $eventDispatcher
+        private readonly UtilitaireService $utilitaireService,
+        private readonly UserService $userService,
+        private readonly EventDispatcherInterface $eventDispatcher
     ){}
 
     #[Route(path: '/api/user-pro', name: 'updateUserProInformation', methods: ['PUT'])]

@@ -18,8 +18,8 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 class UpdateUserEmail extends AbstractController
 {
     public function __construct(
-        public readonly UtilitaireService $utilitaireService,
-        public readonly UserService $userService,
+        private readonly UtilitaireService $utilitaireService,
+        private readonly UserService $userService,
         private readonly EventDispatcherInterface $eventSubscriber
     ){}
 

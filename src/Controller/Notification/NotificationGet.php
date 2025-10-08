@@ -10,7 +10,6 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class NotificationGet extends AbstractController
 {
-    public function __construct(){}
     #[Route(path: '/api/notifications', name: 'notification_get', methods: ['GET'])]
     public function __invoke(#[CurrentUser]User $user){
         try {
