@@ -80,4 +80,12 @@ readonly class UserService
 
         return $user;
     }
+
+    public function deleteUser(User $user): User {
+        $user->setDeletedAt(new \DateTimeImmutable());
+
+        $this->entityManager->flush();
+
+        return $user;
+    }
 }

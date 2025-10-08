@@ -45,7 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Session>
      */
-    #[ORM\OneToMany(targetEntity: Session::class, mappedBy: 'userId', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Session::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $session;
 
     #[ORM\OneToOne(mappedBy: 'relatedUser',cascade: ['remove'])]
@@ -77,7 +77,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'utilisateur', cascade: ['remove'])]
     private Collection $notifications;
-
 
     public function __construct()
     {

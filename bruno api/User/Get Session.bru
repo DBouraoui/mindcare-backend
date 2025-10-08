@@ -1,0 +1,19 @@
+meta {
+  name: Get Session
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:8000/api/user-session
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NTk5MTQwNDYsImV4cCI6MTc1OTkxNzY0Niwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZGRhQGdtYWlsLmNvbSJ9.zijCIcjYr_kc9jzAlQBd4ZpzOmuTvsxht4-PVSuQY0tZQS5ZHb13Xzdnr7eeFc3FuYie4Lfz-Tyco1tq4GteChbx_a3B7OJm5BbzkofUahWgxs18IAdIzlTwp71vv4CtC5wVfdKCZxeVp0dOqVRr4dM9jUrSh-u6c42yYvck5mmPWw0ago2XRO44-wRr5sTMoqPDT5CxNOkwRHoKpZ3zSILkQDVoxajmNRrqMcoSf8H_-CpShg6Rq-8LnxSRV_A4mzlqAhC-kn0naA3FKDXYotKz3e7E3lOXrdCo5IfEAJ6CsJSFjKgjQ4xjtJbN69dZ8pTLlYtZuJU0GotPtKQ3Zw
+}
+
+settings {
+  encodeUrl: true
+}

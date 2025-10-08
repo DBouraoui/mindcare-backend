@@ -59,8 +59,6 @@ readonly class AuthService
             ]
         );
 
-
-
         return $user;
     }
 

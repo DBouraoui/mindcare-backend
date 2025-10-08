@@ -1,0 +1,19 @@
+meta {
+  name: Delete account
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://localhost:8000/api/user
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NTk5MTIxMjksImV4cCI6MTc1OTkxNTcyOSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZGRhQGdtYWlsLmNvbSJ9.n7l_YcsukyUCkfLyj-5EhZuZnptdWSzyv45bvLnzn-in0j70Xn5kR6QGSJpDBtZmDc0GI5TWKUROo4Re1_zv61VMADOHUIVbJDfGKvZjn1KINjRIujGPw9cNUAgHUOjrnnNci29Kzpm7dTSBgftRGmX65Gy2VJgvpNLo_Ma38g3zLfZmcPWoJsqVzaMLYkKdXOP-dg8pc24Kd8JgaUpDaEZXZ2uzuB_cA1Qm_fDgs0aflPTZNXCVrNnhFLgjhO1064KTGTQrDj9JwKXoQg93tTK7XsKkkIlpqb0n6GPX4AGalGW3PAak9gCCh5LHx3kx_LCFWbOGewCJACItgtNBCA
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,30 @@
+{% extends 'email/base_email.html.twig' %}
+
+{% block subject %}Votre compte a bien été supprimé{% endblock %}
+
+{% block content %}
+    <p>Bonjour <strong>{{ user.email|e }}</strong>,</p>
+
+    <p>Nous vous confirmons que votre compte a bien été supprimé de notre application.</p>
+
+    <p>Toutes vos données personnelles associées à ce compte ont été supprimées conformément à notre politique de confidentialité.</p>
+
+    <p>Si vous souhaitez revenir parmi nous, vous pouvez à tout moment créer un nouveau compte en cliquant sur le lien ci-dessous :</p>
+
+    <p style="text-align: center;">
+        <a href="{{ app_url }}/register" target="_blank" style="
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #0069d9;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;">
+            Créer un nouveau compte
+        </a>
+    </p>
+
+    <p>Si vous n’êtes pas à l’origine de cette suppression, merci de contacter notre support immédiatement.</p>
+
+    <p>Bien cordialement,<br>L’équipe Mindcare</p>
+{% endblock %}
