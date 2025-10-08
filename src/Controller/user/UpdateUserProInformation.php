@@ -3,14 +3,13 @@
 namespace App\Controller\user;
 
 use App\DTO\user\UpdateUserProInformationDto;
-use App\Entity\Notification;
 use App\Entity\User;
 use App\Enum\NotificationType;
 use App\Event\NotificationCreateEvent;
 use App\Service\UserService;
 use App\Service\UtilitaireService;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
@@ -20,7 +19,7 @@ class UpdateUserProInformation extends AbstractController
     public function __construct(
         public readonly UtilitaireService $utilitaireService,
         public readonly UserService $userService,
-        public readonly EventSubscriberInterface $eventSubscriber
+        public readonly EventDispatcherInterface $eventDispatcher
     ){}
 
     #[Route(path: '/api/user-pro', name: 'updateUserProInformation', methods: ['PUT'])]
@@ -40,7 +39,7 @@ class UpdateUserProInformation extends AbstractController
 
             $this->userService->updateProInformation($proInformationDto,$user);
 
-            $this->eventSubscriber->dispatch(
+            $this->eventDispatcher->dispatch(
                 new NotificationCreateEvent(
                     "Modification des information Professionel",
                     "Une mise à jour de vos informations pro à été effectuer",

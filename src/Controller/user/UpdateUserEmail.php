@@ -8,8 +8,8 @@ use App\Enum\NotificationType;
 use App\Event\NotificationCreateEvent;
 use App\Service\UserService;
 use App\Service\UtilitaireService;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +20,7 @@ class UpdateUserEmail extends AbstractController
     public function __construct(
         public readonly UtilitaireService $utilitaireService,
         public readonly UserService $userService,
-        private readonly EventSubscriberInterface $eventSubscriber
+        private readonly EventDispatcherInterface $eventSubscriber
     ){}
 
     #[Route(path: '/api/user-email', name: 'updateUserEmail', methods: ['PATCH'])]
@@ -44,8 +44,6 @@ class UpdateUserEmail extends AbstractController
                    $user
                )
            );
-
-           //todo send email and notif for update
             return $this->json(['success'=>true],200);
         } catch (\Throwable $e) {
             return $this->json($e->getMessage(), 500);

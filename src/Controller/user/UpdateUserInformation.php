@@ -3,15 +3,13 @@
 namespace App\Controller\user;
 
 use App\DTO\user\UpdateUserInformationDto;
-use App\DTO\user\UpdateUserPasswordDto;
 use App\Entity\User;
 use App\Enum\NotificationType;
 use App\Event\NotificationCreateEvent;
-use App\Service\AuthService;
 use App\Service\UserService;
 use App\Service\UtilitaireService;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,9 +20,9 @@ class UpdateUserInformation extends AbstractController
     public function __construct(
         private readonly UtilitaireService $utilitaireService,
         private readonly UserService $userService,
-        private readonly EventSubscriberInterface $eventSubscriber
+        private readonly EventDispatcherInterface $eventDispatcher
     ){}
-    #[Route(path: '/api/user', name: 'updateUserInformation', methods: ['PUT'])]
+    #[Route(path: '/api/user-information', name: 'updateUserInformation', methods: ['PUT'])]
     public function __invoke(#[CurrentUser]User $user,Request $request): JsonResponse
     {
         try {
@@ -37,7 +35,7 @@ class UpdateUserInformation extends AbstractController
 
           $user = $this->userService->updateInformation($userInformationDto, $user);
 
-          $this->eventSubscriber->dispatch(
+          $this->eventDispatcher->dispatch(
               new NotificationCreateEvent(
                   "Modification de vos informations personelles",
                   "La modification des vos informations personelles est un succés",
