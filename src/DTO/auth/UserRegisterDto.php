@@ -46,5 +46,4 @@ class UserRegisterDto implements DtoInterface
     public string $lastname;
     public string $city;
     public string $phone;
-
 }

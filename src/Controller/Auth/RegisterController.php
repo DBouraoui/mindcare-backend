@@ -87,10 +87,9 @@ final class RegisterController extends AbstractController
     #[Route('/api/register-pro', name: 'app_register_pro', methods: ['POST'])]
     public function registerProfessionel(Request $request): JsonResponse {
         try {
-            $requestData = json_decode($request->getContent());
-
             // Decode and validate the registration data
             $requestData = json_decode($request->getContent());
+
             $registerDto = $this->utilService->mapAndValidateRequestDto(
                 $requestData,
                 new UserRegisterDto()

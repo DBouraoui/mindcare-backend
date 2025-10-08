@@ -1,10 +1,11 @@
 <?php
 
 namespace App\DTO\auth;
+use App\Interface\DtoInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-class ProfessionelRegisterDto implements \App\Interface\DtoInterface
+class ProfessionelRegisterDto implements DtoInterface
 {
     /**
      * The user's email address.
@@ -40,9 +41,17 @@ class ProfessionelRegisterDto implements \App\Interface\DtoInterface
     public string $lastname;
     public string $city;
     public string $phone;
-    public string $price;
-    public string $description;
-    public string $country;
-    public string $diplome;
+    //Pro information
+    public string $price_pro;
+    public string $description_pro;
+    public string $country_pro;
+    public string $diplome_pro;
+    public string $title_pro;
+    public string $email_pro;
+    public string $phone_pro;
+    public string $siren_pro;
+    public string $siret_pro;
+    public string $address_pro;
+    public string $city_pro;
 
 }

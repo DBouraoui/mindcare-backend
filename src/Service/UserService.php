@@ -76,6 +76,36 @@ readonly class UserService
             $proInformation->setPrice($dto->price);
         }
 
+        if ($proInformation->getPhone() !== $dto->phone) {
+            $proInformation->setPhone($dto->phone);
+        }
+
+        if ($proInformation->getAddress() !== $dto->address) {
+            $proInformation->setAddress($dto->address);
+        }
+
+        if ($proInformation->getCity() !== $dto->city) {
+            $proInformation->setCity($dto->city);
+        }
+
+        if ($proInformation->getSiren() !== $dto->siren) {
+            $proInformation->setSiren($dto->siren);
+        }
+
+        if ($proInformation->getSiret() !== $dto->siret) {
+            $proInformation->setSiret($dto->siret);
+        }
+
+        if ($proInformation->getTitle() !== $dto->title) {
+            $proInformation->setTitle($dto->title);
+        }
+
+        if ($proInformation->getEmail() !== $dto->email) {
+            $proInformation->setEmail($dto->email);
+        }
+
+        $proInformation->setUpdatedAt(new \DateTimeImmutable());
+
         $this->entityManager->flush();
 
         return $user;

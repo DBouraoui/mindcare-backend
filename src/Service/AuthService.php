@@ -33,6 +33,10 @@ readonly class AuthService
         $user = (new User());
         $user->setEmail($dto->email)
             ->setPassword($this->userPasswordHasher->hashPassword($user, $dto->password))
+            ->setFirstname($dto->firstname)
+            ->setLastname($dto->lastname)
+            ->setPhone($dto->phone)
+            ->setCity($dto->city)
             ->setCreatedAt($now)
             ->setUpdatedAt($now)
             ->setIsActive(false);
@@ -63,13 +67,22 @@ readonly class AuthService
     }
 
     public function createPro(DtoInterface $dto, User $user): User {
+        $now = new \DateTimeImmutable();
         $pro =  (new Pro())
-            ->setPrice($dto->price)
-            ->setCountry($dto->country)
-            ->setDescription($dto->description)
-            ->setDiplome($dto->diplome)
+            ->setPrice($dto->price_pro)
+            ->setCountry($dto->country_pro)
+            ->setDescription($dto->description_pro)
+            ->setDiplome($dto->diplome_pro)
+            ->setTitle($dto->title_pro)
+            ->setSiren($dto->siren_pro)
+            ->setSiret($dto->siret_pro)
+            ->setAddress($dto->address_pro)
+            ->setCity($dto->city_pro)
+            ->setEmail($dto->email_pro)
+            ->setPhone($dto->phone_pro)
+            ->setUpdatedAt($now)
             ->setUtilisateur($user)
-            ->setCreatedAt(new \DateTimeImmutable());
+            ->setCreatedAt($now);
 
         $this->entityManager->persist($pro);
         $this->entityManager->flush();
