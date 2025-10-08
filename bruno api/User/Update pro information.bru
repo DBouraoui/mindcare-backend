@@ -1,0 +1,28 @@
+meta {
+  name: Update pro information
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8000/api/user-pro
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NTk5MDcxNTMsImV4cCI6MTc1OTkxMDc1Mywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZHlsYW4uYm91cmFvdWlAZXBpdGVjaC5ldSJ9.XtH6H7Cofx34tqokTlyW6Ty8ma1N26E6PgR4zHA4hD8rPKWE9ZuqIz2aWxCr8vpwhm4i_0rSGf41LukqHxf2kRw1zlcC3Yjau3vKIsoIW_zrPr1RtYafqBGcQptiKE8fMo-EzcCcovoP7l8_2dUdaMzCq_s832pdFfSFbfWRgMdLD3tOJC81y8wN_267UgbOplyGDEuJggRTJ_StGPFdw3s543qT1GXR6oh2ViVc8ftoVT5cA9o6rWFcZ13vM2oYDId7egOJnqrOORCN2i1ft6XG3iXxEsguXZjDxEjpAsGTuKq1aIzUFbjgm7Xv1rlt5rrsNb3lBiJS3xDhvouPYQ
+}
+
+body:json {
+  {
+    "description": "{{description}}",
+    "price": "{{price}}",
+    "diplome": "{{diplome}}",
+    "country": "{{country}}"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

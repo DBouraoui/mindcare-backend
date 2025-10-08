@@ -55,4 +55,29 @@ readonly class UserService
 
         return $user;
     }
+
+    public function updateProInformation(DtoInterface $dto, User $user): User
+    {
+        $proInformation = $user->getPro();
+
+        if ($proInformation->getCountry() !== $dto->country) {
+            $proInformation->setCountry($dto->country);
+        }
+
+        if ($proInformation->getDiplome() !== $dto->diplome) {
+            $proInformation->setDiplome($dto->diplome);
+        }
+
+        if ($proInformation->getDescription() !== $dto->description) {
+            $proInformation->setDescription($dto->description);
+        }
+
+        if ($proInformation->getPrice() !== $dto->price) {
+            $proInformation->setPrice($dto->price);
+        }
+
+        $this->entityManager->flush();
+
+        return $user;
+    }
 }
