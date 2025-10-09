@@ -1,0 +1,25 @@
+meta {
+  name: Create conversation
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8000/api/create-conversation
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjAwMDA3MTMsImV4cCI6MTc2MDAwNDMxMywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZHlsYW4uYm91cmFvdWlAZXBpdGVjaC5ldSJ9.bb9k8Gd9NoC7U7ZS1F1vo-E3YSfoscxJnwEHEh4utG6OU6CMH-rakPE-kag5K8RP330kW9vyiPMFUfmt_V36YElfGsb5-t9aCixZqspIQo_JU0-SxeNDOz5CmvpMUZ0qy7PZDgwTKm1apfsMGm44KuUbmEZq-hEIxEYU54MgBeyJsjqaPzyOrHunp2iAG7qAW0OcIhP2IWTcac0tiEcR6frYqO7JW3rqPSkmb0IUJOVjFqCT9C44WuLVHpmUmIiVdVfFz85kzvTREOBjZWBb4UnuSAvdzCuIg0Y8vQSuWXNjWpgftzOqf8gKbKTRI1dFLB_7vIbg61gqiZJX8hB3RA
+}
+
+body:json {
+  {
+    "user2":"15"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

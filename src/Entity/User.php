@@ -78,10 +78,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'utilisateur', cascade: ['remove'])]
     private Collection $notifications;
 
+    /**
+     * @var Collection<int, Conversation>
+     */
+    #[ORM\OneToMany(targetEntity: Conversation::class, mappedBy: 'user1')]
+    private Collection $conversations;
+
+    /**
+     * @var Collection<int, Message>
+     */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'sender')]
+    private Collection $messagesSend;
+
     public function __construct()
     {
         $this->session = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->conversations = new ArrayCollection();
+        $this->messagesSend = new ArrayCollection();
     }
 
     #[ORM\PreUpdate]
@@ -369,6 +383,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($notification->getUtilisateur() === $this) {
                 $notification->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Conversation>
+     */
+    public function getConversations(): Collection
+    {
+        return $this->conversations;
+    }
+
+    public function addConversation(Conversation $conversation): static
+    {
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations->add($conversation);
+            $conversation->setUser1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversation(Conversation $conversation): static
+    {
+        if ($this->conversations->removeElement($conversation)) {
+            // set the owning side to null (unless already changed)
+            if ($conversation->getUser1() === $this) {
+                $conversation->setUser1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessagesSend(): Collection
+    {
+        return $this->messagesSend;
+    }
+
+    public function addMessagesSend(Message $messagesSend): static
+    {
+        if (!$this->messagesSend->contains($messagesSend)) {
+            $this->messagesSend->add($messagesSend);
+            $messagesSend->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagesSend(Message $messagesSend): static
+    {
+        if ($this->messagesSend->removeElement($messagesSend)) {
+            // set the owning side to null (unless already changed)
+            if ($messagesSend->getSender() === $this) {
+                $messagesSend->setSender(null);
             }
         }
 
