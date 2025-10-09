@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Chat;
 
+use App\DTO\Chat\CreateMessageDto;
 use App\Entity\User;
 use App\Service\ChatService;
 use App\Service\UtilitaireService;
@@ -21,10 +22,18 @@ class CreateMessage extends AbstractController
         private readonly ChatService $chatService,
     ){}
 
-    #[Route('/api/create-message', name: 'create-message', methods: ['POST'])]
+    #[Route('/api/create-message', name: 'api_create_message', methods: ['POST'])]
     public function __invoke(#[CurrentUser]User $user, Request $request): Response
     {
         try {
+            $data = json_decode($request->getContent());
+
+            $createMessageDto = $this->utilitaireService->mapAndValidateRequestDto(
+                $data,
+                new CreateMessageDto()
+            );
+
+            $this->chatService->createMessage($createMessageDto, $user);
 
             return $this->json(['success'=>true, 'message'=>'Message send'], 201);
         } catch(\Throwable $e) {
