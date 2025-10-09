@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -55,6 +57,17 @@ class Pro
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
+
+    /**
+     * @var Collection<int, SchedulesPro>
+     */
+    #[ORM\OneToMany(targetEntity: SchedulesPro::class, mappedBy: 'pro')]
+    private Collection $schedulesPros;
+
+    public function __construct()
+    {
+        $this->schedulesPros = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -225,6 +238,36 @@ class Pro
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SchedulesPro>
+     */
+    public function getSchedulesPros(): Collection
+    {
+        return $this->schedulesPros;
+    }
+
+    public function addSchedulesPro(SchedulesPro $schedulesPro): static
+    {
+        if (!$this->schedulesPros->contains($schedulesPro)) {
+            $this->schedulesPros->add($schedulesPro);
+            $schedulesPro->setPro($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchedulesPro(SchedulesPro $schedulesPro): static
+    {
+        if ($this->schedulesPros->removeElement($schedulesPro)) {
+            // set the owning side to null (unless already changed)
+            if ($schedulesPro->getPro() === $this) {
+                $schedulesPro->setPro(null);
+            }
+        }
 
         return $this;
     }

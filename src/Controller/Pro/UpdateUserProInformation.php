@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\user;
+namespace App\Controller\Pro;
 
-use App\DTO\user\UpdateUserProInformationDto;
+use App\DTO\Pro\UpdateUserProInformationDto;
 use App\Entity\User;
 use App\Enum\NotificationType;
 use App\Event\NotificationCreateEvent;

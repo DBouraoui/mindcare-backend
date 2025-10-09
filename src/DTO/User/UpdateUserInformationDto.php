@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\user;
+namespace App\DTO\User;
 
 use App\Interface\DtoInterface;
 
