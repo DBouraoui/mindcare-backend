@@ -1,0 +1,31 @@
+meta {
+  name: Update Schedule
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:8000/api/update-schedules
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NTk5OTQ5ODAsImV4cCI6MTc1OTk5ODU4MCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZHlsYW4uYm91cmFvdWlAZXBpdGVjaC5ldSJ9.rzgou06GvpX73qulYBUwizVHhH4lmhjd3ylD0b6CA_Db8YkEEFB4XOyxD3Mfv0TQQExMfe3SfpDcWKWe3oeC0cStNPCPZ__EGy6wS5Tk2pzF90ZZfccFxCeFN9YP-ttkpkgGzPEwn75QpWUrrNLHixoX_uawakSEeZXaJsnts9oI1DNCgCqnZX7lOgXY4NEK3-Y42k0QA7fNBOSTXF40eN_ePWwM6jQHc8wTcaRfa0qCvpnv9snzR6uExR8zR5l0Rj21QHdAP0-Qqq7lA0iOKGFhOIpJkjEn9Oaj5ETQYpiotB38Np9tzoHwEVqpX6BWl6CXxtCb0-KOZwZogmvI-g
+}
+
+body:json {
+  {
+    "id": "4",
+    "day": "Mardi",
+    "morningStart":"8",
+    "morningEnd":"10",
+    "afternoonStart": "12",
+    "afternoonEnd": "15",
+    "closed": ""
+  }
+}
+
+settings {
+  encodeUrl: true
+}

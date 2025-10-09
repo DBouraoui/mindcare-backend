@@ -14,13 +14,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
-class CreateSchedulesController extends AbstractController
+class CreateSchedulesPro extends AbstractController
 {
 
     public function __construct(
         private readonly UtilitaireService $utilitaireService,
         private readonly ProService $proService,
     ){}
+
     #[Route('/api/create-schedules', name: 'pro_create_schedules', methods: ['POST'])]
     public function __invoke(#[CurrentUser]User $user, Request $request): Response
     {
