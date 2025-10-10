@@ -64,9 +64,16 @@ class Pro
     #[ORM\OneToMany(targetEntity: SchedulesPro::class, mappedBy: 'pro')]
     private Collection $schedulesPros;
 
+    /**
+     * @var Collection<int, Booking>
+     */
+    #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'pro')]
+    private Collection $bookings;
+
     public function __construct()
     {
         $this->schedulesPros = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -266,6 +273,36 @@ class Pro
             // set the owning side to null (unless already changed)
             if ($schedulesPro->getPro() === $this) {
                 $schedulesPro->setPro(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Booking>
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): static
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings->add($booking);
+            $booking->setPro($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): static
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getPro() === $this) {
+                $booking->setPro(null);
             }
         }
 

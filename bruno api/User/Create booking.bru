@@ -1,0 +1,29 @@
+meta {
+  name: Create booking
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8000/api/create-booking
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjAwODQ1MTYsImV4cCI6MTc2MDA4ODExNiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZHlsYW4uYm91cmFvdWlAZXBpdGVjaC5ldSJ9.T4luDNy9q2VEHpQdUlZbu_emwjBQ_rltzW8K32FccNjVTbbKf5eqlGrqmRpXJRxyh7cSEJd1CEkD-6mP25LxF6LFhmL-evKFZPexzhGZ0aloJisvjbMbwaAC1ilg_0Q1VZ1wXFwv6MBO3S455XiqIMFwFvwxHLGXgWoK7rQt1NnoJHzwAf1gfHXK5wwjp16usq3B9hs5SNiHt6P5b6Wny75xZdMOrHOmAhP1KSqc9KBalS7NqDpagFysRvf37ja0OZHgdGsctHkqh_U61BrX3OVxLw3JYUUOOCvEI37CEyDADnfiJZHnmS8-Pk7Fbjm8biH8J54YPcIqCVrtsEzZOQ
+}
+
+body:json {
+  {
+    "proId": "6",
+    "startAt": "2025-10-09T15:00:00",
+    "endAt": "2025-10-09T16:00:00",
+    "note": "J'aimerais avoir une visio dans le jardin"
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+}

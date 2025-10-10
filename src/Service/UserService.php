@@ -2,8 +2,12 @@
 
 namespace App\Service;
 
+use App\Entity\Booking;
 use App\Entity\User;
+use App\Enum\BookingStatusType;
 use App\Interface\DtoInterface;
+use App\Repository\BookingRepository;
+use App\Repository\ProRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -12,6 +16,8 @@ readonly class UserService
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly ProRepository $proRepository,
+        private readonly BookingRepository $bookingRepository,
     ){}
     public function updateInformation(DtoInterface $dto, User $user): User {
 
@@ -117,5 +123,69 @@ readonly class UserService
         $this->entityManager->flush();
 
         return $user;
+    }
+
+    public function createBooking(DtoInterface $dto, User $user): Booking
+    {
+        $pro = $this->proRepository->find($dto->proId);
+
+        if (!$pro) {
+            Throw new \Exception('Pro not found');
+        }
+
+        $startAt = new \DateTimeImmutable($dto->startAt);
+        $endAt = new \DateTimeImmutable($dto->endAt);
+
+        if ($startAt > $endAt) {
+            Throw new \Exception('Start date must be after end date');
+        }
+
+        $exists = $this->bookingRepository->createQueryBuilder('b')
+            ->andWhere('b.pro = :pro')
+            ->andWhere('b.startAt < :end')
+            ->andWhere('b.endAt > :start')
+            ->setParameter('pro', $pro)
+            ->setParameter('start', $startAt)
+            ->setParameter('end', $endAt)
+            ->getQuery()
+            ->getResult();
+
+        if ($exists) {
+            Throw new \Exception('Booking already exists');
+        }
+
+        $booking = new Booking();
+        $booking->setPro($pro);
+        $booking->setUtilisateur($user);
+        $booking->setStartAt($startAt);
+        $booking->setEndAt($endAt);
+        $booking->setStatus(BookingStatusType::PENDING->value);
+        $booking->setNote($dto->note);
+        $booking->setCreatedAt(new \DateTimeImmutable());
+
+        $this->entityManager->persist($booking);
+        $this->entityManager->flush();
+
+        return $booking;
+    }
+
+    public function deleteBooking(string $id): Booking
+    {
+       $booking =  $this->bookingRepository->find($id);
+       $now = new \DateTimeImmutable();
+       $twoDaysAgo = new \DateTimeImmutable('+2 days');
+
+       if ($booking->getStartAt() < $now) {
+           Throw new \Exception('The booking is already passed');
+       }
+
+       if ($booking->getStartAt() < $twoDaysAgo) {
+           Throw new \Exception('The booking must be scheduled at least 2 days in advance.');
+       }
+
+       $this->entityManager->remove($booking);
+       $this->entityManager->flush();
+
+       return $booking;
     }
 }

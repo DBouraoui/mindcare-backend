@@ -90,12 +90,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'sender')]
     private Collection $messagesSend;
 
+    /**
+     * @var Collection<int, Booking>
+     */
+    #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'utilisateur')]
+    private Collection $bookings;
+
     public function __construct()
     {
         $this->session = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->conversations = new ArrayCollection();
         $this->messagesSend = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     #[ORM\PreUpdate]
@@ -443,6 +450,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($messagesSend->getSender() === $this) {
                 $messagesSend->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Booking>
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): static
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings->add($booking);
+            $booking->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): static
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getUtilisateur() === $this) {
+                $booking->setUtilisateur(null);
             }
         }
 
