@@ -1,0 +1,19 @@
+meta {
+  name: Get user information
+  type: http
+  seq: 9
+}
+
+get {
+  url: http://localhost:8000/api/get-user-information
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjAxMDA5NzIsImV4cCI6MTc2MDEwNDU3Miwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZHlsYW4uYm91cmFvdWlAZXBpdGVjaC5ldSJ9.VbA38tNG6ICvS7l4LRNJSEXtM098wbLnOXhjzGgpyzCHs-RBcWtIpuvU88yLabKoE_C_mLwr1uP5BV4u0VoKyV_ZqFjrSPAoXWpCl9KOzyKCBQZLjpFrlu_k_GlWnH0Jwbl5w63HYvwlNLrKLzgQhttQqjlAqKDnY5445OXBrDnZ9fReb0xRlSjk2bp1HivOpPXXts_WqHI_1j0J-1o7A4I3X-Wuyt0R4gm5cVSKdKqM2D_-caT7WMtkHorjxqjBz-lRsfYSK-eUekVxRDC4_zpz4oy3CqpH4s1R1hms6hcwiaBSE82x539vsZdD3q6F4RZX4bNjyZmNesHX2cL3Fw
+}
+
+settings {
+  encodeUrl: true
+}
