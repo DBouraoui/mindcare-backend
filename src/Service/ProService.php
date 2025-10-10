@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\SchedulesPro;
 use App\Entity\User;
 use App\Interface\DtoInterface;
+use App\Repository\BookingRepository;
 use App\Repository\SchedulesProRepository;
 use Doctrine\ORM\EntityManagerInterface;
 readonly class ProService
@@ -12,6 +13,7 @@ readonly class ProService
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly SchedulesProRepository $schedulesProRepository,
+        private readonly BookingRepository $bookingRepository,
     ){}
 
     public function createSchedule(DtoInterface $dto, User $user): SchedulesPro
@@ -71,5 +73,15 @@ readonly class ProService
         $this->entityManager->flush();
 
         return true;
+    }
+
+    public function returnAllBooking(User $user) {
+        $bookings = $this->bookingRepository->findBy(['pro'=>$user->getPro()]);
+
+        if (empty($bookings)) {
+            Throw new \Exception('No booking exists');
+        }
+
+        return $bookings;
     }
 }
