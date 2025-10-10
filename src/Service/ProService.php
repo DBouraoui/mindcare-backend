@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
+use App\Entity\Booking;
 use App\Entity\SchedulesPro;
 use App\Entity\User;
+use App\Enum\BookingStatusType;
 use App\Interface\DtoInterface;
 use App\Repository\BookingRepository;
 use App\Repository\SchedulesProRepository;
@@ -84,4 +86,20 @@ readonly class ProService
 
         return $bookings;
     }
+
+    public function validateBooking(string $id, string $status): Booking
+    {
+        $booking = $this->bookingRepository->find(intval($id));
+
+        if (empty($booking)) {
+            Throw new \Exception('Booking not found');
+        }
+
+        $booking->setStatus(BookingStatusType::from($status)->value);
+
+        $this->entityManager->flush();
+
+        return $booking;
+    }
+
 }
