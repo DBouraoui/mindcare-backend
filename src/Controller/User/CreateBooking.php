@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class CreateBooking extends AbstractController
@@ -26,6 +27,7 @@ class CreateBooking extends AbstractController
     ){}
 
     #[Route('/api/create-booking', name: 'api_create_booking', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
     public function __invoke(#[CurrentUser]User $user, Request $request): Response
     {
         try {

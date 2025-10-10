@@ -22,7 +22,7 @@ readonly class AuthService
     /**
      * Crée un utilisateur avec un token de validation par e-mail.
      */
-    public function createUser(DtoInterface $dto): User
+    public function createUser(DtoInterface $dto, bool $isPro = false): User
     {
         if ($this->entityManager->getRepository(User::class)->findOneBy(['email' => $dto->email])) {
             throw new \Exception("User already exists");
@@ -39,6 +39,7 @@ readonly class AuthService
             ->setCity($dto->city)
             ->setCreatedAt($now)
             ->setUpdatedAt($now)
+            ->setRoles( $isPro ? ['ROLE_PRO', 'ROLE_USER'] :['ROLE_USER'])
             ->setIsActive(false);
 
         $token = (new UserToken())

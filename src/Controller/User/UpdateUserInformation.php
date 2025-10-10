@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UpdateUserInformation extends AbstractController
 {
@@ -23,6 +24,7 @@ class UpdateUserInformation extends AbstractController
         private readonly EventDispatcherInterface $eventDispatcher
     ){}
     #[Route(path: '/api/user-information', name: 'updateUserInformation', methods: ['PUT'])]
+    #[IsGranted('ROLE_USER')]
     public function __invoke(#[CurrentUser]User $user,Request $request): JsonResponse
     {
         try {

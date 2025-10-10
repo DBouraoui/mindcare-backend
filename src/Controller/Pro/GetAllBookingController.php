@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class GetAllBookingController extends AbstractController
 {
@@ -17,6 +18,7 @@ class GetAllBookingController extends AbstractController
         private readonly ProService $proService,
     ){}
     #[Route('/api/get-all-booking', name: 'get-all-booking', methods: ['GET'])]
+    #[IsGranted('ROLE_PRO')]
     public function __invoke(#[CurrentUser]User $user): Response
     {
         try {

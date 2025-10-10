@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UpdateUserEmail extends AbstractController
 {
@@ -24,6 +25,7 @@ class UpdateUserEmail extends AbstractController
     ){}
 
     #[Route(path: '/api/user-email', name: 'updateUserEmail', methods: ['PATCH'])]
+    #[IsGranted('ROLE_USER')]
     public function __invoke(#[CurrentUser]User $user, Request $request): JsonResponse
     {
         try {

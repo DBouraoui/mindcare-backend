@@ -9,10 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class GetProInformationController extends AbstractController
 {
     #[Route('/api/get-pro-information', name: 'api_get_pro_information', methods: ['GET'])]
+    #[IsGranted('ROLE_PRO')]
     public function __invoke(#[CurrentUser]User $user): Response
     {
         try {

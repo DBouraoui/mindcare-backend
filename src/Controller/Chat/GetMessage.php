@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class GetMessage extends AbstractController
 {
@@ -20,6 +21,7 @@ class GetMessage extends AbstractController
     ){}
 
     #[Route('/api/messages/{conversationId}', name: 'chat_get_message', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function __invoke(#[CurrentUser]User $user, $conversationId): Response
     {
         try {

@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UpdateUserProInformation extends AbstractController
 {
@@ -23,13 +24,10 @@ class UpdateUserProInformation extends AbstractController
     ){}
 
     #[Route(path: '/api/user-pro', name: 'updateUserProInformation', methods: ['PUT'])]
+    #[IsGranted('ROLE_PRO')]
     public function __invoke(#[CurrentUser]User $user,Request $request)
     {
         try {
-            if (empty($user->getPro())) {
-                return $this->json(['success' => false, 'message'=> 'You are not Pro'], 400);
-            }
-
             $data = json_decode($request->getContent());
 
            $proInformationDto = $this->utilitaireService->mapAndValidateRequestDto(

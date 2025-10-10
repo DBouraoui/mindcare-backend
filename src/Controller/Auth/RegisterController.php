@@ -96,7 +96,7 @@ final class RegisterController extends AbstractController
             );
 
             // Create user and generate token
-            $user =  $this->authService->createUser($registerDto);
+            $user =  $this->authService->createUser($registerDto, true);
 
             // Validate Profesionel data
             $proDto = $this->utilService->mapAndValidateRequestDto(

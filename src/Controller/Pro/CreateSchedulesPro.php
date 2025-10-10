@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CreateSchedulesPro extends AbstractController
 {
@@ -23,13 +24,10 @@ class CreateSchedulesPro extends AbstractController
     ){}
 
     #[Route('/api/create-schedules', name: 'pro_create_schedules', methods: ['POST'])]
+    #[IsGranted('ROLE_PRO')]
     public function __invoke(#[CurrentUser]User $user, Request $request): Response
     {
         try {
-            if (!$user->getPro()) {
-                return $this->json(['success' => false], Response::HTTP_FORBIDDEN);
-            }
-
             $data = json_decode($request->getContent());
 
            $schedulesDto = $this->utilitaireService->mapAndValidateRequestDto(

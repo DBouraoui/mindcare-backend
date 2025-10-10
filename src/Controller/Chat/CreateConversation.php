@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CreateConversation extends AbstractController
 {
@@ -19,6 +20,7 @@ class CreateConversation extends AbstractController
     ){}
 
     #[Route('/api/create-conversation', name: 'api_create_conversation', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
     public function __invoke(#[CurrentUser]User $user, Request $request)
     {
         try {

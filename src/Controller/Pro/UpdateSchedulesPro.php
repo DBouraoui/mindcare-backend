@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UpdateSchedulesPro extends AbstractController
 {
@@ -21,6 +22,7 @@ class UpdateSchedulesPro extends AbstractController
         private readonly ProService $proService,
     ){}
     #[Route('/api/update-schedules', name: 'api_update_schedules', methods: ['PUT'])]
+    #[IsGranted('ROLE_PRO')]
     public function __invoke(#[CurrentUser]User $user, Request $request): Response
     {
         try {

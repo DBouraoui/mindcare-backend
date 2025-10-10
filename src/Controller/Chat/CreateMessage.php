@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CreateMessage extends AbstractController
 {
@@ -23,6 +24,7 @@ class CreateMessage extends AbstractController
     ){}
 
     #[Route('/api/create-message', name: 'api_create_message', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
     public function __invoke(#[CurrentUser]User $user, Request $request): Response
     {
         try {

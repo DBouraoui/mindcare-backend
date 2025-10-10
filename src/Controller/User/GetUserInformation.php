@@ -9,11 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class GetUserInformation extends AbstractController
 {
     #[Route('/api/get-user-information', name: 'api_get_user_information', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function __invoke(#[CurrentUser]User $user): Response
     {
         try {

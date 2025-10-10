@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ValidateBookingController extends AbstractController
 {
@@ -22,6 +23,7 @@ class ValidateBookingController extends AbstractController
     ){}
 
     #[Route('/api/validate-booking/{id}/{status}', name: 'validate-booking', methods: ['PATCH'])]
+    #[IsGranted('ROLE_PRO')]
     public function __invoke(#[CurrentUser] User $user, string $id, string $status): Response
     {
         try {

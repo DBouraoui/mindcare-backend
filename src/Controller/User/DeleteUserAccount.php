@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class DeleteUserAccount extends AbstractController
 {
@@ -19,6 +20,7 @@ class DeleteUserAccount extends AbstractController
     ){}
 
     #[Route(path: '/api/user', name: 'userDeleteAccount', methods: ['DELETE'])]
+    #[IsGranted('ROLE_USER')]
     public function __invoke(#[CurrentUser]User $user){
         try {
             $this->userService->deleteUser($user);
