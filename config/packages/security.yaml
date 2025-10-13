@@ -31,6 +31,7 @@ security:
         - { path: ^/api/confirm-email, roles: PUBLIC_ACCESS }
         - { path: ^/api/forget-password, roles: PUBLIC_ACCESS }
         - { path: ^/api/update-password, roles: PUBLIC_ACCESS }
+        - { path: ^/api/create-newsletter, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

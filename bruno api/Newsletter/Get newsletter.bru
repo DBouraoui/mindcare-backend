@@ -1,0 +1,19 @@
+meta {
+  name: Get newsletter
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8000/api/newsletter
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjAzNjc0MDksImV4cCI6MTc2MDM3MTAwOSwicm9sZXMiOlsiUk9MRV9QUk8iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJkeWxhbi5ib3VyYW91aUBlcGl0ZWNoLmV1In0.c5Qj_pTB7cRr2P8QFFPP6aatPdnVBdOZQVjiRN3U-KpwbyVhS855CAmqwOaSdAh58jELVbHKxm1p2ZZsnVGNz1nEtvU9pNPEIky8vdC3-lWqihJtHGg1Ljl6ZLBJvkEGNSetUZpFu953A4sLv8CEMR4jzzHA1sUAb2025hDUk82Xf2i9eoYaIFflCiZ5JZLRsGY6KmPBPvT7D6nKxbntQNjuvRaPTScBnhVBbCoX250BnQgGfBz1YyeJvownUgZy-l70lIq_FhgS0vWSs1Y6LLiioirkKEkLBzUWqLK4layNiYIHvdT2LrpNcJzDFmebzIOZ1OmoQ1NQlC1GHbjowg
+}
+
+settings {
+  encodeUrl: true
+}
