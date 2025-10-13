@@ -16,7 +16,7 @@ class GetNewsletterController extends AbstractController
     public function __construct(
         private readonly NewsletterService $newsletterService,
     ){}
-    #[Route('/api/newsletter', name: 'api_create_newsletter', methods: ['GET'])]
+    #[Route('/api/newsletter', name: 'api_get_newsletter', methods: ['GET'])]
     public function __invoke(#[CurrentUser]User $user): Response
     {
         try{

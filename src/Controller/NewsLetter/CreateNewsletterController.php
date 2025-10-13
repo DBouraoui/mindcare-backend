@@ -19,13 +19,13 @@ class CreateNewsletterController extends AbstractController
     public function __invoke(Request $request): Response
     {
         try{
-            $data = json_decode($request->getContent());
+            $data = json_decode($request->getContent(),true);
 
-            $this->newsletterService->createNewsletter($data->email);
+            $this->newsletterService->createNewsletter($data['email']);
 
             return $this->json(['success' => true]);
         } catch(\Throwable $e) {
-            return $this->json(['success'=>false,'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json(['success'=>false,'message' => $e->getMessage()],400);
         }
     }
 }

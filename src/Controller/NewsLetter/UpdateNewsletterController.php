@@ -16,7 +16,7 @@ class UpdateNewsletterController extends AbstractController
     public function __construct(
         private readonly NewsletterService $newsletterService,
     ){}
-    #[Route('/api/newsletter', name: 'api_create_newsletter', methods: ['PATCH'])]
+    #[Route('/api/newsletter', name: 'api_update_newsletter', methods: ['PATCH'])]
     public function __invoke(#[CurrentUser]User $user): Response
     {
         try{

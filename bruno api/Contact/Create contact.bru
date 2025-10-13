@@ -1,0 +1,28 @@
+meta {
+  name: Create contact
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8000/api/create-contact
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjAzNzE0NzAsImV4cCI6MTc2MDM3NTA3MCwicm9sZXMiOlsiUk9MRV9QUk8iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJkeWxhbi5ib3VyYW91aUBlcGl0ZWNoLmV1In0.QTWPHztj3Bjgz-tVUZrAXklrkqhdECxNuieiYO0kPzejZAP7ljQYQ96embDFjJiuj6jEiUU-T9F6WNMY4eUgCLnX-YUrBCP_KrY_4aNujBBHT2tf0beeY0F4ghdxsMxSJGjhoEd8obQ1lEakuQB_BqASvA5euv-Vd4fUrKX4MWV0RsttU2wmE0nL5tqs1oZIJcLe-e6QZ1AFHkm3wBJ9kOn4t3JgRSTFvWUmNFNXV0zSmijyIKLsKzyuw2hOfcRqJmkN3bDIc0l_hDTFVMm6E0kGmXVnCcRx1Sr6uAdQfKXmp6DrHzSezd97u4iJ8VrzpYuqGOq0uFcwpmSzRY5U4A
+}
+
+body:json {
+  {
+    "title": "J'ai perdu mon compte",
+    "email":"{{email}}",
+    "type":"account",
+    "message":"Bonjour j'ai perdu mon compte crotte !"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
