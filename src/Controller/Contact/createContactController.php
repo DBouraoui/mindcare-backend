@@ -32,6 +32,15 @@ class createContactController extends AbstractController
 
             $this->contactService->createContact($contactDto);
 
+            $this->utilitaireService->sendEmail(
+                "Confirmation de reception de votre message",
+                $contactDto->email,
+                "Contact/Confirmation-contact",
+                [
+                    'title'=> $contactDto->title,
+                ]
+            );
+
             return $this->json(['success' => true]);
         } catch(\Exception $e) {
             return $this->json(['success' => false,'error' => $e->getMessage()]);

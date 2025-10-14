@@ -1,0 +1,33 @@
+{% extends 'email/base_email.html.twig' %}
+
+{% block subject %}Nous avons bien reçu votre demande de contact{% endblock %}
+
+{% block content %}
+    <p>Bonjour</p>
+
+    <p>
+        Nous avons bien reçu votre message concernant :
+        <strong>{{ title }}</strong>.
+    </p>
+
+    <p>
+        Notre équipe vous répondra dans les plus brefs délais.
+        Si votre demande est urgente, vous pouvez nous contacter directement à :
+        <a href="mailto:contact@mindcare.fr">contact@mindcare.fr</a>.
+    </p>
+
+    <p style="text-align: center; margin: 20px 0;">
+        <a href="http://localhost:3000" target="_blank" style="
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #2563eb;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;">
+            Retourner sur le site
+        </a>
+    </p>
+
+    <p>Merci de votre confiance,<br>L’équipe MindCare</p>
+{% endblock %}
