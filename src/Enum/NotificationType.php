@@ -17,6 +17,6 @@ enum NotificationType: string
     /** Notification needing more attention */
     case WARNING = 'warning';
     /** Notification very important */
-    case ALERT = 'ALERT';
+    case ALERT = 'alert';
 
 }

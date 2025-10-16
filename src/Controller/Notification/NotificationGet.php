@@ -14,18 +14,24 @@ class NotificationGet extends AbstractController
     public function __invoke(#[CurrentUser]User $user){
         try {
 
-            $notification = $user->getNotifications()->map(function (Notification $notification) {
-            return [
-                "id" => $notification->getId(),
-                'title'=> $notification->getTitle(),
-                "description" => $notification->getDescription(),
-                "type" => $notification->getType(),
-                "readAt" => $notification->getReadAt(),
-                "createdAt" => $notification->getCreatedAt(),
-                ];
+            $notifications = $user->getNotifications()
+                ->map(function (Notification $notification) {
+                    return [
+                        "id" => $notification->getId(),
+                        "title" => $notification->getTitle(),
+                        "description" => $notification->getDescription(),
+                        "type" => $notification->getType(),
+                        "readAt" => $notification->getReadAt(),
+                        "createdAt" => $notification->getCreatedAt(),
+                    ];
+                })
+                ->toArray();
+
+            usort($notifications, function ($a, $b) {
+                return $b['createdAt'] <=> $a['createdAt'];
             });
 
-            return $this->json($notification);
+            return $this->json($notifications);
         } catch( \Throwable $e) {
             return $this->json(['error' => $e->getMessage()], 500);
         }

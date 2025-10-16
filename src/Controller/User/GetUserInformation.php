@@ -26,9 +26,9 @@ class GetUserInformation extends AbstractController
                 'lastname' => $user->getLastname(),
                 'phone' => $user->getPhone(),
                 'city' => $user->getCity(),
-                'isAtive'=> $user->isActive(),
-                'createdAt' => $user->getCreatedAt()->format('d-m-Y H:i'),
-                'updatedAt' => $user->getUpdatedAt()->format('d-m-y H:i'),
+                'isActive'=> $user->isActive(),
+                'createdAt' => $user->getCreatedAt()?->format(\DateTime::ATOM),
+                'updatedAt' => $user->getUpdatedAt()?->format(\DateTime::ATOM),
             ];
 
             return $this->json($data);

@@ -8,6 +8,7 @@ use App\Enum\BookingStatusType;
 use App\Interface\DtoInterface;
 use App\Repository\BookingRepository;
 use App\Repository\ProRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -18,6 +19,7 @@ readonly class UserService
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly ProRepository $proRepository,
         private readonly BookingRepository $bookingRepository,
+        private readonly UserRepository $userRepository,
     ){}
     public function updateInformation(DtoInterface $dto, User $user): User {
 
@@ -37,6 +39,8 @@ readonly class UserService
             $user->setLastname($dto->lastname);
         }
 
+        $user->setUpdatedAt(new \DateTimeImmutable());
+
         $this->entityManager->flush();
 
         return $user;
@@ -45,7 +49,7 @@ readonly class UserService
     public function updateUserPassword(DtoInterface $dto, User $user): User
     {
         $user->setPassword($this->passwordHasher->hashPassword($user, $dto->password));
-        $this->entityManager->persist($user);
+        $user->setUpdatedAt(new \DateTimeImmutable());
         $this->entityManager->flush();
 
         return $user;
@@ -53,9 +57,17 @@ readonly class UserService
 
     public function updateEmail(DtoInterface $dto, User $user): User
     {
+        $userDB = $this->userRepository->findOneBy(['email' => $dto->email]);
+
+        if ($userDB) {
+            Throw new \Exception("Email already in use");
+        }
+
         if ($user->getEmail() !== $dto->email) {
             $user->setEmail($dto->email);
         }
+
+        $user->setUpdatedAt(new \DateTimeImmutable());
 
         $this->entityManager->flush();
 
