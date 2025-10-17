@@ -34,8 +34,8 @@ class GetProInformationController extends AbstractController
                 'email' => $pro->getEmail(),
                 'phone' => $pro->getPhone(),
                 'title' => $pro->getTitle(),
-                'updatedAt' => $pro->getUpdatedAt()->format('d-m-Y H:i'),
-                'createdAt' => $pro->getCreatedAt()->format('d-m-Y H:i'),
+                'updatedAt' => $pro->getUpdatedAt()->format(\DateTime::ATOM),
+                'createdAt' => $pro->getCreatedAt()->format(\DateTime::ATOM),
             ];
 
             return $this->json($data);

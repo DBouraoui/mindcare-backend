@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class GetUserInformation extends AbstractController
 {
@@ -27,6 +26,7 @@ class GetUserInformation extends AbstractController
                 'phone' => $user->getPhone(),
                 'city' => $user->getCity(),
                 'isActive'=> $user->isActive(),
+                'isPro' => $user->getPro() ? true : false,
                 'createdAt' => $user->getCreatedAt()?->format(\DateTime::ATOM),
                 'updatedAt' => $user->getUpdatedAt()?->format(\DateTime::ATOM),
             ];
