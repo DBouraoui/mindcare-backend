@@ -107,6 +107,9 @@ final class RegisterController extends AbstractController
             // Create professionel
             $this->authService->createPro($proDto, $user);
 
+            //create schedules
+            $this->authService->createSchedules($user);
+
             // LOG creation of pro
             $this->logger->log(1,sprintf("%s register in pro", $user->getEmail()));
 

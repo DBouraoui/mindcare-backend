@@ -61,7 +61,7 @@ class Pro
     /**
      * @var Collection<int, SchedulesPro>
      */
-    #[ORM\OneToMany(targetEntity: SchedulesPro::class, mappedBy: 'pro')]
+    #[ORM\OneToMany(targetEntity: SchedulesPro::class, mappedBy: 'pro', cascade: ['persist', 'remove'])]
     private Collection $schedulesPros;
 
     /**

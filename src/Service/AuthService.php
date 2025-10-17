@@ -3,11 +3,13 @@
 namespace App\Service;
 
 use App\Entity\Pro;
+use App\Entity\SchedulesPro;
 use App\Entity\User;
 use App\Entity\UserToken;
 use App\Enum\TokenType;
 use App\Interface\DtoInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPStan\Parallel\Schedule;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -90,6 +92,44 @@ readonly class AuthService
 
         return $user;
     }
+
+    public function createSchedules(User $user): void
+    {
+        $this->entityManager->refresh($user);
+
+        if (!$user->getPro()) {
+            throw new \RuntimeException('Le user n’a pas de profil Pro associé.');
+        }
+
+        $days = [
+            'Lundi',
+            'Mardi',
+            'Mercredi',
+            'Jeudi',
+            'Vendredi',
+            'Samedi',
+            'Dimanche',
+        ];
+
+        foreach ($days as $day) {
+            $schedule = new SchedulesPro();
+            $schedule->setPro($user->getPro());
+            $schedule->setDay($day);
+            $schedule->setMorningStart(null);
+            $schedule->setMorningEnd( null);
+            $schedule->setAfternoonStart( null);
+            $schedule->setAfternoonEnd(null);
+            $schedule->setClosed("true");
+            $schedule->setUpdatedAt(new \DateTimeImmutable());
+
+            $user->getPro()->addSchedulesPro($schedule);
+
+            $this->entityManager->persist($schedule);
+        }
+
+        $this->entityManager->flush();
+    }
+
 
     /**
      * Confirme l'adresse e-mail de l'utilisateur avec un token.
