@@ -1,0 +1,24 @@
+meta {
+  name: Get favorite
+  type: http
+  seq: 14
+}
+
+get {
+  url: http://localhost:8000/api/favorite
+  body: none
+  auth: bearer
+}
+
+headers {
+  : 
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjA3OTUxNjIsImV4cCI6MTc2MDgwMjM2Miwicm9sZXMiOlsiUk9MRV9QUk8iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJkeWxhbi5ib3VyYW91aUBlcGl0ZWNoLmV1IiwiZmlyc3RuYW1lIjoiRHlsYW4iLCJsYXN0bmFtZSI6IkJvdXJhb3VpIiwiY2l0eSI6IlRvdWxvbiIsInBob25lIjoiMDY4MzQ1NDM2NyJ9.R4_FxMKeLo3F9_1saD_Rw1AaE-lwMpIxm1nlctPIhVyADMst2RKcCPr-Jd2TJ9PRYXksKJbigwi4XpL9LYjIoa2G9SOC6aAxWtJ4pxX957rv_85yeeQ2GP7D5OnbOy3v5A7PyGpk7mvKD8BMwcmeYqY-0hEBzgjnkv-YuKjN2JZ-6GU63wmsre9C50sVNSSswredrBCD_9rr_z5vSyS04RPIWNHWOC6PEev-T_geVh6sK832xmtSeJruL4xtvSs7Trt4tCTDNgKlvcw8JQePZtnq8FJrTn3OefRBx2zMMFjHlBR5ZSpU6SCkbEU82hTtq8NZkrw06IpAwRyX9Mi5Qg
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

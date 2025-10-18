@@ -102,6 +102,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Newsletter::class, mappedBy: 'utilisateur')]
     private Collection $newsletters;
 
+    /**
+     * @var Collection<int, Favorite>
+     */
+    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'utilisateur')]
+    private Collection $favorites;
+
     public function __construct()
     {
         $this->session = new ArrayCollection();
@@ -110,6 +116,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->messagesSend = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->newsletters = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     #[ORM\PreUpdate]
@@ -517,6 +524,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($newsletter->getUtilisateur() === $this) {
                 $newsletter->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favorite>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Favorite $favorite): static
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites->add($favorite);
+            $favorite->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Favorite $favorite): static
+    {
+        if ($this->favorites->removeElement($favorite)) {
+            // set the owning side to null (unless already changed)
+            if ($favorite->getUtilisateur() === $this) {
+                $favorite->setUtilisateur(null);
             }
         }
 

@@ -3,17 +3,17 @@
 namespace App\Service;
 
 use App\Entity\Booking;
+use App\Entity\Favorite;
 use App\Entity\Pro;
 use App\Entity\User;
 use App\Enum\BookingStatusType;
 use App\Interface\DtoInterface;
 use App\Repository\BookingRepository;
+use App\Repository\FavoriteRepository;
 use App\Repository\ProRepository;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\TypeInfo\Type\CollectionType;
 
 readonly class UserService
 {
@@ -23,6 +23,7 @@ readonly class UserService
         private readonly ProRepository $proRepository,
         private readonly BookingRepository $bookingRepository,
         private readonly UserRepository $userRepository,
+        private readonly FavoriteRepository $favoriteRepository,
     ){}
     public function updateInformation(DtoInterface $dto, User $user): User {
 
@@ -227,6 +228,38 @@ readonly class UserService
     public function getPraticienById(int $id): Pro
     {
         return $this->proRepository->find($id);
+    }
+
+    public function createFavoritePro(int $proId, User $user): Favorite{
+        $pro = $this->proRepository->find($proId);
+
+        if (!$pro) {
+            Throw new \Exception('Pro not found');
+        }
+
+        $favorite = new Favorite();
+        $favorite->setUtilisateur($user);
+        $favorite->setPro($pro);
+        $favorite->setCreatedAt(new \DateTimeImmutable());
+
+        $this->entityManager->persist($favorite);
+        $this->entityManager->flush();
+
+        return $favorite;
+    }
+
+    public function deleteFavoritePro(int $proId, User $user): bool
+    {
+        $favorite = $this->favoriteRepository->findOneBy(['utilisateur' => $user, 'pro' => $proId]);
+
+        if (!$favorite) {
+            Throw new \Exception('Pro not found');
+        }
+
+        $this->entityManager->remove($favorite);
+        $this->entityManager->flush();
+
+        return true;
     }
 
 }
