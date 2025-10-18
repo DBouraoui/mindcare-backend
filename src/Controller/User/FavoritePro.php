@@ -51,6 +51,20 @@ class FavoritePro extends AbstractController
         }
     }
 
+    #[Route('/api/favorite-pro/{id}', name: 'favorite_pro_delete_by_id', methods: ['DELETE'])]
+    public function deleteById(
+        #[CurrentUser]User $user, $id): Response
+    {
+        try {
+
+            $this->userService->deleteFavoriteProById($id);
+
+            return $this->json(['success' => true]);
+        } catch(\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
 
     #[Route('/api/favorite', name: 'favorite_pro_get_all', methods: ['GET'])]
     public function getAll(
@@ -64,6 +78,7 @@ class FavoritePro extends AbstractController
             foreach($favorites as $favorite) {
                 $array[] = [
                     'id' => $favorite->getId(),
+                    'idPro' => $favorite->getPro()->getId(),
                     'firstname'=> $favorite->getPro()->getUtilisateur()->getFirstname(),
                     'lastname' => $favorite->getPro()->getUtilisateur()->getLastname(),
                     'title' => $favorite->getPro()->getTitle(),

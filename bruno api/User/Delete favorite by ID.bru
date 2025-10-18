@@ -1,17 +1,13 @@
 meta {
-  name: Delete favorite
+  name: Delete favorite by ID
   type: http
-  seq: 13
+  seq: 15
 }
 
 delete {
-  url: http://localhost:8000/api/favorite-pro?proId=15
+  url: http://localhost:8000/api/favorite-pro/15
   body: none
   auth: bearer
-}
-
-params:query {
-  proId: 15
 }
 
 auth:bearer {

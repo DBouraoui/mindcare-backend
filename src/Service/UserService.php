@@ -262,4 +262,18 @@ readonly class UserService
         return true;
     }
 
+    public function deleteFavoriteProById(string $id): bool
+    {
+        $favorite = $this->favoriteRepository->find($id);
+
+        if (!$favorite) {
+            Throw new \Exception('Favorite not found');
+        }
+
+        $this->entityManager->remove($favorite);
+        $this->entityManager->flush();
+
+        return true;
+    }
+
 }
