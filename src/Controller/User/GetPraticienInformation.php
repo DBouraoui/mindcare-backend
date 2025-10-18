@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\User;
 
+use App\Entity\Favorite;
+use App\Entity\User;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class GetPraticienInformation extends AbstractController
 {
@@ -40,12 +43,17 @@ class GetPraticienInformation extends AbstractController
     }
 
     #[Route('/api/get-praticien-information/{id}', name: 'api_get_all_praticien_information', methods: ['GET'])]
-    public function allInformation(string $id): Response
+    public function allInformation(#[CurrentUser]User $user,string $id): Response
     {
         try {
             $praticienObject = $this->userService->getPraticienById(intval($id));
 
             $horrairesObject = $praticienObject->getSchedulesPros();
+
+            $isFavorite = $user->getFavorites()->exists(
+                fn ($key, Favorite $favorite) => $favorite->getPro()->getId() === $praticienObject->getId()
+            );
+
 
             $horraires = [];
             foreach ($horrairesObject as $horraire) {
@@ -79,6 +87,7 @@ class GetPraticienInformation extends AbstractController
                 'email' => $praticienObject->getEmail(),
                 'phone' => $praticienObject->getPhone(),
                 'title' => $praticienObject->getTitle(),
+                'isFavorite'=> boolval($isFavorite),
                 'updatedAt' => $praticienObject->getUpdatedAt()->format(\DateTime::ATOM),
                 'createdAt' => $praticienObject->getCreatedAt()->format(\DateTime::ATOM),
                 'horraires' => $horraires,
