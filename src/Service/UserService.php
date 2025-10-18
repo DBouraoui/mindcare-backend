@@ -3,14 +3,17 @@
 namespace App\Service;
 
 use App\Entity\Booking;
+use App\Entity\Pro;
 use App\Entity\User;
 use App\Enum\BookingStatusType;
 use App\Interface\DtoInterface;
 use App\Repository\BookingRepository;
 use App\Repository\ProRepository;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\TypeInfo\Type\CollectionType;
 
 readonly class UserService
 {
@@ -200,4 +203,30 @@ readonly class UserService
 
        return $booking;
     }
+
+    public function getPraticienListing(string $query)
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+
+        return $qb
+            ->select('p')
+            ->from(\App\Entity\Pro::class, 'p')
+            ->where(
+                $qb->expr()->orX(
+                    $qb->expr()->like('LOWER(p.city)', ':query'),
+                    $qb->expr()->like('LOWER(p.address)', ':query'),
+                    $qb->expr()->like('LOWER(p.diplome)', ':query'),
+                    $qb->expr()->like('LOWER(p.title)', ':query')
+                )
+            )
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getPraticienById(int $id): Pro
+    {
+        return $this->proRepository->find($id);
+    }
+
 }

@@ -19,9 +19,13 @@ class GetUserSession extends AbstractController
                 return [
                     'id' => $session->getId(),
                     'login' => $session->getIp(),
-                    'created_at'=>$session->getLoggedAt()->format('d-m-y H:i:s'),
+                    'createdAt'=>$session->getLoggedAt()->format(\DateTime::ATOM),
                     'agent'=> $session->getUserAgent()
                 ];
+            })->toArray();
+
+            usort($logs, function ($a, $b) {
+                return $b['createdAt'] <=> $a['createdAt'];
             });
 
             return $this->json($logs,200);

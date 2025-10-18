@@ -1,0 +1,24 @@
+meta {
+  name: Get praticien information
+  type: http
+  seq: 11
+}
+
+get {
+  url: http://localhost:8000/api/get-praticien-information?query=psycho
+  body: none
+  auth: bearer
+}
+
+params:query {
+  query: psycho
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjA3NzYyMzMsImV4cCI6MTc2MDc4MzQzMywicm9sZXMiOlsiUk9MRV9QUk8iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJkeWxhbi5ib3VyYW91aUBlcGl0ZWNoLmV1IiwiZmlyc3RuYW1lIjoiRHlsYW4iLCJsYXN0bmFtZSI6IkJvdXJhb3VpIiwiY2l0eSI6IlRvdWxvbiIsInBob25lIjoiMDY4MzQ1NDM2NyJ9.JG_mGqU0iwD0pt6KmrG0tUoF0A1PBPboHac3fvSxsiFtEb4kB-zezSnAt3AS3XB9eh7nr1PIwPaX2q2gP8PPvbieSFS_Gl9RSj1DP0GZ0ns6ZvP7br6dQfnKft6j_CGk5ADSIXTU2pLJkutkW1tKVKvnSGY_gFY2g1qz2BZTPe7wmI5BL2Dl3zrwkd1rUBF8afUF6Bca1PH3N1nzJG1yqi77u4MoFV8sOnE9rA3qQqmIDnRP32ZtlljSqkMMk2cpLjw2vKSaDyAUqXnyFl5-eGn_LOisAITfdYs4A5uSYt2tksQHq1m4ZwmE5tldm83WIipd5bgiYmbnWwvIn9MsRQ
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

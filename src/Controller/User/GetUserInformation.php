@@ -26,7 +26,7 @@ class GetUserInformation extends AbstractController
                 'phone' => $user->getPhone(),
                 'city' => $user->getCity(),
                 'isActive'=> $user->isActive(),
-                'isPro' => $user->getPro() ? true : false,
+                'isPro' => (bool)$user->getPro(),
                 'createdAt' => $user->getCreatedAt()?->format(\DateTime::ATOM),
                 'updatedAt' => $user->getUpdatedAt()?->format(\DateTime::ATOM),
             ];
