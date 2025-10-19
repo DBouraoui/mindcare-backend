@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Interface\DtoInterface;
 use App\Repository\ConversationRepository;
 use App\Repository\MessageRepository;
+use App\Repository\ProRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -16,8 +17,9 @@ readonly class ChatService
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly ConversationRepository $conversationRepository,
-        private readonly MessageRepository $messageRepository,
-        private readonly UserRepository $userRepository,
+        private readonly MessageRepository      $messageRepository,
+        private readonly UserRepository         $userRepository,
+        private ProRepository $proRepository,
     ) {}
 
     public function createConversation(DtoInterface $dto, User $user): Conversation
@@ -26,10 +28,12 @@ readonly class ChatService
             Throw new \Exception('You can\'t create a conversation with yourself.');
         }
 
-        $user2 = $this->userRepository->find($dto->user2);
+        $pro = $this->proRepository->find($dto->user2);
+
+        $user2 = $pro->getUtilisateur();
 
         if (!$user2) {
-            Throw new \Exception('User cible not found');
+            Throw new \Exception('Pro cible not found');
         }
 
        $conversationAlreadyExiste = $user->getConversations()->filter(function (Conversation $conversation) use ($user2) {

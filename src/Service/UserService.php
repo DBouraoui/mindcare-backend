@@ -13,6 +13,7 @@ use App\Repository\FavoriteRepository;
 use App\Repository\ProRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 readonly class UserService
@@ -212,16 +213,19 @@ readonly class UserService
         return $qb
             ->select('p')
             ->from(\App\Entity\Pro::class, 'p')
+            ->join('p.utilisateur', 'u')
             ->where(
                 $qb->expr()->orX(
                     $qb->expr()->like('LOWER(p.city)', ':query'),
                     $qb->expr()->like('LOWER(p.address)', ':query'),
                     $qb->expr()->like('LOWER(p.diplome)', ':query'),
                     $qb->expr()->like('LOWER(p.title)', ':query'),
-                    $qb->expr()->like('LOWER(p.description)', ':query')
+                    $qb->expr()->like('LOWER(p.description)', ':query'),
+                    $qb->expr()->like('LOWER(u.firstname)', ':query'),
+                    $qb->expr()->like('LOWER(u.lastname)', ':query')
                 )
             )
-            ->setParameter('query', '%' . $query . '%')
+            ->setParameter('query', '%' . strtolower($query) . '%')
             ->getQuery()
             ->getResult();
     }

@@ -30,6 +30,8 @@ class GetPraticienInformation extends AbstractController
                 $array[] = [
                     'id' => $praticien->getId(),
                     'title'=> $praticien->getTitle(),
+                    'firstname'=> $praticien->getUtilisateur()->getFirstname(),
+                    'lastname'=> $praticien->getUtilisateur()->getLastname(),
                     'description' => $praticien->getDescription(),
                     'city' => $praticien->getCity(),
                     'address' => $praticien->getAddress(),
@@ -53,6 +55,8 @@ class GetPraticienInformation extends AbstractController
                 $array[] = [
                     'id' => $praticien->getId(),
                     'title'=> $praticien->getTitle(),
+                    'firstname'=> $praticien->getUtilisateur()->getFirstname(),
+                    'lastname'=> $praticien->getUtilisateur()->getLastname(),
                     'description' => $praticien->getDescription(),
                     'city' => $praticien->getCity(),
                     'address' => $praticien->getAddress(),
@@ -104,6 +108,8 @@ class GetPraticienInformation extends AbstractController
                 'price' => $praticienObject->getPrice(),
                 'country' => $praticienObject->getCountry(),
                 'city' => $praticienObject->getCity(),
+                'firstname'=>$praticienObject->getUtilisateur()->getFirstname(),
+                'lastname'=>$praticienObject->getUtilisateur()->getLastname(),
                 'address' => $praticienObject->getAddress(),
                 'siren' => $praticienObject->getSiren(),
                 'siret' => $praticienObject->getSiret(),
