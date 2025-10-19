@@ -217,7 +217,8 @@ readonly class UserService
                     $qb->expr()->like('LOWER(p.city)', ':query'),
                     $qb->expr()->like('LOWER(p.address)', ':query'),
                     $qb->expr()->like('LOWER(p.diplome)', ':query'),
-                    $qb->expr()->like('LOWER(p.title)', ':query')
+                    $qb->expr()->like('LOWER(p.title)', ':query'),
+                    $qb->expr()->like('LOWER(p.description)', ':query')
                 )
             )
             ->setParameter('query', '%' . $query . '%')
@@ -274,6 +275,10 @@ readonly class UserService
         $this->entityManager->flush();
 
         return true;
+    }
+
+    public function getAllPraticienListing() {
+        return $this->proRepository->findAll();
     }
 
 }

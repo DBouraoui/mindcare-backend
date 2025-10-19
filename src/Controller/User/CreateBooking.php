@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class CreateBooking extends AbstractController
@@ -69,6 +70,38 @@ class CreateBooking extends AbstractController
             //Todo send email
 
             return $this->json(['success' => true],201);
+        } catch(\Exception $e) {
+            return $this->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    #[Route('/api/get-booking', name: 'api_get_booking', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
+    public function getBooking(#[CurrentUser]User $user): Response
+    {
+        try {
+            $bookings = $user->getBookings();
+
+            $array = [];
+            foreach ($bookings as $booking) {
+                $array[] = [
+                    'id' =>strval($booking->getId()),
+                    'userId' => strval($booking->getUtilisateur()->getId()),
+                    'pro' => [
+                        'id' => strval($booking->getPro()->getId()),
+                        'firstname'=> $booking->getPro()->getUtilisateur()->getFirstname(),
+                        'lastname' => $booking->getPro()->getUtilisateur()->getLastname(),
+                        'city' => $booking->getPro()->getCity(),
+                        'address' => $booking->getPro()->getAddress(),
+                    ] ,
+                    'startAt' => $booking->getStartAt()->format(\DateTime::ATOM),
+                    'endAt' => $booking->getEndAt()->format(\DateTime::ATOM),
+                    'createdAt' => $booking->getCreatedAt()->format(\DateTime::ATOM),
+                    'note' => $booking->getNote(),
+                ];
+            }
+
+            return $this->json($array);
         } catch(\Exception $e) {
             return $this->json(['success' => false, 'message' => $e->getMessage()]);
         }

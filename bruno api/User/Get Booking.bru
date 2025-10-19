@@ -1,0 +1,20 @@
+meta {
+  name: Get Booking
+  type: http
+  seq: 17
+}
+
+get {
+  url: http://localhost:8000/api/get-booking
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjA4ODM1MTgsImV4cCI6MTc2MDg5MDcxOCwicm9sZXMiOlsiUk9MRV9QUk8iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJkeWxhbi5ib3VyYW91aUBlcGl0ZWNoLmV1IiwiZmlyc3RuYW1lIjoiRHlsYW4iLCJsYXN0bmFtZSI6IkJvdXJhb3VpIiwiY2l0eSI6IlRvdWxvbiIsInBob25lIjoiMDY4MzQ1NDM2NyJ9.sXZuXiNfcuUMHnMkqLOl_NOHX5tTHgiCAa2oaTV2sk-Qsc7nrFXAKxF2d3jgfh4oBhDgHDe3RgIeFxqs8aDNm6D6uzVsj1C9DIjZQaYKgFz-lNoZX-JtqahGfZyvlaq--LhPYznpOtEgMtg9bV3bXI2lKQemRBzYUeGezoXvqed60_ApMsh7fUij3tCSKvfGp0abN7LCSHJu75Vp4dPdH4k2ZaPvXAiLrmVTruWHWhBt9hLuA7qudZ32N2lka9qnKpwUFLdciQ29RQP5f7nDZmjk1C478cNHP-O1sxqh-fZkSMYAXIf4KlEvQEGl44sApM9DFiN3U-Vy4eeffPE6xw
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -49,6 +49,17 @@ readonly class ChatService
        $this->entityManager->persist($conversation);
        $this->entityManager->flush();
 
+       $this->entityManager->refresh($conversation);
+
+       $message = new Message();
+       $message->setConversation($conversation);
+       $message->setText($dto->text);
+       $message->setCreatedAt(new \DateTimeImmutable());
+       $message->setSender($user);
+
+       $this->entityManager->persist($message);
+       $this->entityManager->flush();
+
        return $conversation;
     }
 

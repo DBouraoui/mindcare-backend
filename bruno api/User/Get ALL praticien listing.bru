@@ -1,0 +1,20 @@
+meta {
+  name: Get ALL praticien listing
+  type: http
+  seq: 16
+}
+
+get {
+  url: http://localhost:8000/api/get-all-praticien-listing
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjA4NjE1MTQsImV4cCI6MTc2MDg2ODcxNCwicm9sZXMiOlsiUk9MRV9QUk8iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJkeWxhbi5ib3VyYW91aUBlcGl0ZWNoLmV1IiwiZmlyc3RuYW1lIjoiRHlsYW4iLCJsYXN0bmFtZSI6IkJvdXJhb3VpIiwiY2l0eSI6IlRvdWxvbiIsInBob25lIjoiMDY4MzQ1NDM2NyJ9.jttLIun2NqXB9pnc0jUs3_D4Dunh_03ONbtttfIwBpyDiZ5Ppnjn-l0ebKKKt-l_JbCgvo8PH3LfIpHJ7Szbrrsl3HJA7T5AzSB4eF5Y64i6oZiDKXGZKO8EndhULP0-KXIkAlapgOc_Cgb_9P4hJc8nTYe0Ji7MqJbFylYMnnzyu2kapzRWjRWmTdBczlKzHe9clAMfGe4G9r0GL2ghIkp4yZSEnNQTAj96hEdNXz-zqJR1eyoA6IN9_lEhdOY5wk4i6Rl6oCTtq7Y38YriO9YqYZZhTHHSrHJOTm2eAUmG6RwLsNn7LPCoQLtVc3fQ1LrTH8nGNgHg9e5g1x075w
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

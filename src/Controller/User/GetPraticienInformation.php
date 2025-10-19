@@ -42,6 +42,29 @@ class GetPraticienInformation extends AbstractController
         }
     }
 
+    #[Route('/api/get-all-praticien-listing', name: 'api_get_all-praticien_listing', methods: ['GET'])]
+    public function getAllPraticienListing(): Response
+    {
+        try {
+            $praticienObject = $this->userService->getAllPraticienListing();
+
+            $array = [];
+            foreach ($praticienObject as $praticien) {
+                $array[] = [
+                    'id' => $praticien->getId(),
+                    'title'=> $praticien->getTitle(),
+                    'description' => $praticien->getDescription(),
+                    'city' => $praticien->getCity(),
+                    'address' => $praticien->getAddress(),
+                ];
+            }
+
+            return $this->json($array);
+        } catch(\Throwable $e){
+            return $this->json(['success'=>false,'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     #[Route('/api/get-praticien-information/{id}', name: 'api_get_all_praticien_information', methods: ['GET'])]
     public function allInformation(#[CurrentUser]User $user,string $id): Response
     {
