@@ -18,19 +18,19 @@ readonly class ChatService
         private readonly EntityManagerInterface $entityManager,
         private readonly ConversationRepository $conversationRepository,
         private readonly MessageRepository      $messageRepository,
-        private readonly UserRepository         $userRepository,
         private ProRepository $proRepository,
     ) {}
 
     public function createConversation(DtoInterface $dto, User $user): Conversation
     {
-        if ($user->getId() === intval($dto->user2)) {
+        $pro = $this->proRepository->find($dto->user2);
+        $user2 = $pro->getUtilisateur();
+
+        if ($user->getId() === intval($user2->getId())) {
             Throw new \Exception('You can\'t create a conversation with yourself.');
         }
 
-        $pro = $this->proRepository->find($dto->user2);
 
-        $user2 = $pro->getUtilisateur();
 
         if (!$user2) {
             Throw new \Exception('Pro cible not found');
