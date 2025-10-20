@@ -94,20 +94,35 @@ readonly class ChatService
             throw new \Exception('No messages found');
         }
 
+
         $data = [];
         foreach ($messages as $msg) {
+            $idsender = $user->getId() === $msg->getSender()->getId() ? "me" : $msg->getSender()->getId();
+
             $data[] = [
-                'id' => $msg->getId(),
+                'id' => strval($msg->getId()),
                 'content' => $msg->getText(),
                 'sender' => [
-                    'id' => $msg->getSender()->getId(),
+                    'id' => $msg->getSender()->getId() === $user->getId() ? 'me' : strval($msg->getSender()->getId()),
                     'name' => $msg->getSender()->getLastname() . ' ' . $msg->getSender()->getFirstname(),
                 ],
-                'createdAt' => $msg->getCreatedAt()->format('Y-m-d H:i:s'),
+                'createdAt' => $msg->getCreatedAt()->format(\DateTime::ATOM),
             ];
+
         }
 
         return $data;
     }
 
+    public function getListingConversations(User $user)
+    {
+       $conversation = $this->conversationRepository->createQueryBuilder('conversation')
+            ->where('conversation.user1 = :user')
+            ->orWhere('conversation.user2 = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+
+       return $conversation;
+    }
 }
