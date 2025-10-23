@@ -38,14 +38,15 @@ readonly  class NewsletterService
 
     public function updateNewsletter(User $user): void
     {
-        // Récupère la première newsletter associée
-        $newsletter = $user->getNewsletters()->first();
+        // Récupère la première newsletter associée (si elle existe)
+        $newsletter = $user->getNewsletters()->first() ?: null;
 
-        if ($newsletter !== false && $newsletter !== null) {
-
+        if ($newsletter) {
+            // L'utilisateur est déjà abonné → on le désabonne
             $user->removeNewsletter($newsletter);
             $this->entityManager->remove($newsletter);
         } else {
+            // L'utilisateur n'est pas abonné → on l'abonne
             $newsletter = new Newsletter();
             $newsletter->setEmail($user->getEmail());
             $newsletter->setCreatedAt(new \DateTimeImmutable());
@@ -57,5 +58,6 @@ readonly  class NewsletterService
 
         $this->entityManager->flush();
     }
+
 
 }

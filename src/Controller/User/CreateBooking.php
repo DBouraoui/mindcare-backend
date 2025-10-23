@@ -98,6 +98,7 @@ class CreateBooking extends AbstractController
                     'endAt' => $booking->getEndAt()->format(\DateTime::ATOM),
                     'createdAt' => $booking->getCreatedAt()->format(\DateTime::ATOM),
                     'note' => $booking->getNote(),
+                    'status' => $booking->getStatus(),
                 ];
             }
 

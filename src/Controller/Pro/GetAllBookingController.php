@@ -36,8 +36,8 @@ class GetAllBookingController extends AbstractController
                         'email' => $booking->getUtilisateur()->getEmail(),
                         'phone' => $booking->getUtilisateur()->getPhone(),
                     ],
-                    'startAt' => $booking->getStartAt()->format('Y-m-d H:i:s'),
-                    'endAt' => $booking->getEndAt()->format('Y-m-d H:i:s'),
+                    'startAt' => $booking->getStartAt()->format(\DateTime::ATOM),
+                    'endAt' => $booking->getEndAt()->format(\DateTime::ATOM),
                     'note' => $booking->getNote(),
                     'status' => $booking->getStatus(),
                 ];
