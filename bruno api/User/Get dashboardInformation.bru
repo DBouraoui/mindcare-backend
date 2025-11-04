@@ -5,11 +5,16 @@ meta {
 }
 
 get {
-  url: 
+  url: http://localhost:8000/api/get-dashboard-information
   body: none
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NjExMjUwMTcsImV4cCI6MTc2MTEzMjIxNywicm9sZXMiOlsiUk9MRV9QUk8iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJkeWxhbi5ib3VyYW91aUBlcGl0ZWNoLmV1IiwiZmlyc3RuYW1lIjoiRHlsYW4iLCJsYXN0bmFtZSI6IkJvdXJhb3VpIiwiY2l0eSI6IlRvdWxvbiIsInBob25lIjoiMDY4MzQ1NDM2NyJ9.OU0ixIJmFHe49PJdG-jdxnVeK-xilK6uZe-uyGz_qKyJ_9_2D80AdnUFdFqcz0B3rYc7trxJ5Nn8lErHwbZVVi_3hQxNMzSKeRKN9WVQVceWhappzx3olPASFrxHhsSgkrfUE5hFycj_O14K3XAquoYL-Ip0YKQpevMUh-s77qMMbeATF9NeswF7LxWO-F2-7ytudJvCPoGBnbwslBvKD7wEsdzhPcoU6NxV59eN6fXi6Arl56nxYTs5RYDsplgVafVadmjJoZnY8mwy98br8JEIRLKwVd2rIjLNSHBmpMRzDtT6FtVsBCJJLU7-NE4m0P3DY-DeCP-6WRKo6_tLYQ
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
