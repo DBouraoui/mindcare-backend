@@ -29,9 +29,10 @@
 
 ## 🚀 Étapes d'installation
 
-1. Générer les clés JWT :
+1. Générer les clés JWT et installer les dépendances :
 
    ```bash
+   php bin/console composer install
    php bin/console lexik:jwt:generate-keypair
    ```
 
@@ -52,11 +53,12 @@
    
     /!\Ne pas oublier de copier la passphrase dans .env.test.local
 
-5. Effectuer les migrations:
+5. Effectuer les migrations et les fixtures pour le dev:
 
    ```bash
    docker compose exec php bin/console make:migration
    docker compose exec php bin/console d:m:m
+   docker compose exec php bin/console doctrine:fixtures:load
    ```
 
 ---

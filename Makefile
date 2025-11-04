@@ -1,4 +1,4 @@
-.PHONY: dev, prod, down, check, consume, test, clean-cache
+.PHONY: dev prod down check consume test clean-cache fixtures
 
 dev:
 	docker compose -f compose.yml --env-file .env.local up -d --wait
@@ -13,10 +13,14 @@ check:
 	vendor/bin/phpstan analyse
 
 consume:
-	php bin/console messenger:consume async -vv
+	docker compose exec php bin/console messenger:consume async -vv
 
 test:
 	php bin/phpunit --testdox
 
 clean-cache:
-	php bin/console cache:clear --env=dev && php bin/console cache:clear --env=test
+	php bin/console cache:clear --env=dev
+	php bin/console cache:clear --env=test
+
+fixtures:
+	docker compose exec php bin/console doctrine:fixtures:load
