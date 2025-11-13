@@ -108,6 +108,9 @@
             "bin/phpunit"
         ]
     },
+    "symfony/ai-bundle": {
+        "version": "dev-main"
+    },
     "symfony/console": {
         "version": "7.3",
         "recipe": {

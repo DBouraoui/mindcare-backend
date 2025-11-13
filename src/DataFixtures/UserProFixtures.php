@@ -3,10 +3,12 @@
 namespace App\DataFixtures;
 
 use App\Entity\Pro;
+use App\Entity\SchedulesPro;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use PHPStan\Parallel\Schedule;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserProFixtures extends Fixture
@@ -151,7 +153,7 @@ class UserProFixtures extends Fixture
         foreach ($items as $i => $data) {
             $user = new User();
             $user->setEmail($data['email'])
-                ->setPassword($this->userPasswordHasher->hashPassword($user, 'password123'))
+                ->setPassword($this->userPasswordHasher->hashPassword($user, 'password'))
                 ->setFirstname($data['firstname'])
                 ->setLastname($data['lastname'])
                 ->setPhone($data['phone'])
@@ -180,6 +182,31 @@ class UserProFixtures extends Fixture
                 ->setUtilisateur($user);
 
             $manager->persist($pro);
+
+            $days = [
+                'lundi',
+                'mardi',
+                'mercredi',
+                'jeudi',
+                'vendredi',
+                'samedi',
+                'dimanche',
+            ];
+
+            foreach ($days as $day) {
+            $schedule = new SchedulesPro();
+            $schedule->setPro($pro);
+            $schedule->setDay($day);
+            $schedule->setMorningStart(null);
+            $schedule->setMorningEnd(null);
+            $schedule->setAfternoonStart(null);
+            $schedule->setAfternoonEnd(null);
+            $schedule->setClosed(true);
+
+            $manager->persist($schedule);
+            }
+
+
 
             // Si votre entité User possède une relation setPro
             if (method_exists($user, 'setPro')) {

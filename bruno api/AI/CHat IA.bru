@@ -1,0 +1,22 @@
+meta {
+  name: CHat IA
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8000/api/chat-ai
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "message": "Comment vas tu mon petit canard en sucre ?"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
